@@ -28,11 +28,17 @@ def validate_time(t):
 # synarthsh pou elegxei an ftasame sthn wra wste na xtyphsei to ksipnititri
 def check_time(time_obj, sound):
 
-    while True:
-        current_time = datetime.now().isoformat(' ', 'seconds')
-        if current_time == str(time_obj):  # elegxos an sympimptoyn oi wres kai meres alliws ksanatrexei
-            sound_playing(sound)
-            return True
+    current_time = datetime.now().isoformat(' ', 'seconds')
+    if current_time > str(time_obj):
+        print(f"Date is in the past ({str(time_obj)}). Live in present.")
+        return False
+    else:
+        while True:
+            current_time = datetime.now().isoformat(' ', 'seconds')
+
+            if current_time == str(time_obj):  # elegxos an sympimptoyn oi wres kai meres alliws ksanatrexei
+                sound_playing(sound)
+                return True
 
 
 # erwthsh an theloume na valoyme kai allo ksipnitiri
@@ -63,12 +69,14 @@ def main():
             continue
         elif answer == '1':
             break
-    # print(alarms)
-    for alarm in alarms:
+    sorted_alarms = sorted(alarms)
+    # print(sorted_alarms)
+    for alarm in sorted_alarms:
         if check_time(alarm, a):
             continue
 
-    print(alarms)
+
+    print(sorted_alarms)
 
 
 if __name__ == '__main__':
