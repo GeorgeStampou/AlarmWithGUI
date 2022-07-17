@@ -75,7 +75,6 @@ def main():
         if check_time(alarm, a):
             continue
 
-
     print(sorted_alarms)
 
 
