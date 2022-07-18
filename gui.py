@@ -2,11 +2,11 @@ import tkinter as tk
 from ctypes import windll
 import os
 import tkinter as tk
-from tkinter import ttk
+from tkinter import ttk,font
 
 
-def save_pressed(event):
-    print("Save button pressed.")
+def save_pressed(year):
+    print(f"Save button pressed.{year}")
 
 
 def main():
@@ -28,15 +28,30 @@ def main():
     root.geometry(my_geometry)
     root.minsize(min_height, min_width)
     root.maxsize(max_height, max_width)
-    ttk.Label(root, text="***ALARM***").pack()
+    label = ttk.Label(
+        root,
+        text="ALARM",
+        font=('Small Fonts', 25)
+    )
+    label.pack()
+
     # root.attributes('-topmost', 1)  ensure that a window is always at the top of the stacking order
     root.iconbitmap(os.path.join("Data", "alarmicon.ico"))
 
-    save_btn = ttk.Button(root, text="SAVE")
-    save_btn.bind('<Button>', save_pressed)
-    save_btn.bind('<Return>', save_pressed)
-    save_btn.focus()
+    date_frame = ttk.Frame(root)
+    date_frame.pack(padx=10, pady=10, expand=True)
+
+    year_label = ttk.Label(date_frame, text='Year')
+    year_label.pack(expand=True)
+
+    year_text = tk.StringVar()
+    year_textbox = ttk.Entry(date_frame, textvariable=year_text)
+    year_textbox.pack(expand=True)
+    year_textbox.focus()
+
+    save_btn = ttk.Button(root, text="SAVE", command=lambda: save_pressed(year_text.get()))
     save_btn.pack(expand=True)
+
     try:
         from ctypes import windll
 
