@@ -55,30 +55,18 @@ def play_again():
             print("You should give 'y' for yes and 'n' for no.")
 
 
-def main():
-    alarms = []
+def func_alarm(alarms):
+
     a = mixer.Sound(os.path.join("Data", "alarm.mp3"))
     print("***ALARM***")
-    while True:
-        time_str = input("What time do you want the alarm to ring?"
-                         "(Date-Month-Year hours:minutes:seconds(24 hour format)): ")
-        time_validated = validate_time(time_str)
+    checked_alarms = []
+    for alarm in alarms:
+        time_validated = validate_time(alarm)
         if time_validated[1]:
-            alarms.append(time_validated[0])
-        answer = play_again()
-        if answer == '0':
+            checked_alarms.append(time_validated[0])
+        else:
+            print("Wrong time. Try again.")
             continue
-        elif answer == '1':
-            break
-    sorted_alarms = sorted(alarms)
-    # print(sorted_alarms)
-    for alarm in sorted_alarms:
-        if check_time(alarm, a):
-            continue
-
-    print(sorted_alarms)
-
-
-if __name__ == '__main__':
-    main()
+    for alarm in checked_alarms:
+        check_time(alarm, a)
 
