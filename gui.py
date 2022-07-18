@@ -4,7 +4,7 @@ from ctypes import windll
 import os
 import tkinter as tk
 from tkinter import ttk, font
-from alarm2 import func_alarm
+from alarm import func_alarm
 
 
 def save_pressed(day, month, year, hour, minute, second, label, alarms):
