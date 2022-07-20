@@ -1,9 +1,7 @@
 import datetime
-import tkinter as tk
-from ctypes import windll
 import os
 import tkinter as tk
-from tkinter import ttk, font
+from tkinter import ttk
 from alarm import func_alarm
 
 
@@ -22,9 +20,41 @@ def submit_pressed(alarms):
     func_alarm(alarms)
 
 
+def exit_pressed(root):
+    root.destroy()
+
+
 def convert_month(month):
     datetime_obj = datetime.datetime.strptime(month, '%B')
     return datetime_obj.month
+
+
+def create_button(root, text, command, row, column, **kwargs):
+    button = ttk.Button(root, text=text, command=command)
+    button.grid(row=row, column=column)
+    return button
+
+
+def create_frame(root, row, column, **kwargs):
+    frame = ttk.Frame(root)
+    colspan = kwargs['columnspan'] if 'columnspan' in kwargs else None
+    frame.grid(row=row, column=column, columnspan=colspan)
+    return frame
+
+
+def create_label(root, text, row, column, **kwargs):
+    f = kwargs['font'] if 'font' in kwargs else None
+    s = kwargs['sticky'] if 'sticky' in kwargs else None
+    colspan = kwargs['columnspan'] if 'columnspan' in kwargs else None
+    label = ttk.Label(root, text=text, font=f)
+    label.grid(row=row, column=column, columnspan=colspan, sticky=s)
+    return label
+
+
+def create_textbox(frame, text, row, column, **kwargs):
+    textbox = ttk.Entry(frame, textvariable=text)
+    textbox.grid(row=row, column=column)
+    return textbox
 
 
 def main():
@@ -49,36 +79,26 @@ def main():
     root.minsize(min_height, min_width)
     root.maxsize(max_height, max_width)
 
-    root.columnconfigure(1, weight=1)
+    root.columnconfigure(0, weight=1)
     root.rowconfigure(3, weight=1)
 
-    label = ttk.Label(
-        root,
-        text="ALARM",
-        font=('Small Fonts', 25)
-    )
-    label.grid(row=0, column=0, columnspan=3, sticky='n')
+    label = create_label(root, 'ALARM', 0, 0, font=('Small Fonts', 25), columnspan=3, sticky='n')
 
     # root.attributes('-topmost', 1)  ensure that a window is always at the top of the stacking order
     root.iconbitmap(os.path.join("Data", "alarmicon.ico"))
 
     # year frame
-    year_frame = ttk.Frame(root)
-    year_frame.grid(row=1, column=2)
+    year_frame = create_frame(root, 1, 2)
 
-    year_label = ttk.Label(year_frame, text='Year', font=('Small Fonts', 15))
-    year_label.grid(row=1, column=2)
+    year_label = create_label(year_frame, 'Year', 1, 2, font=('Small Fonts', 15))
 
     year_text = tk.StringVar()
-    year_textbox = ttk.Entry(year_frame, textvariable=year_text)
-    year_textbox.grid(row=2, column=2)
+    year_textbox = create_textbox(year_frame, year_text, 2, 2)
 
     # month frame
-    month_frame = ttk.Frame(root)
-    month_frame.grid(row=1, column=1)
+    month_frame = create_frame(root, 1, 1)
 
-    month_label = ttk.Label(month_frame, text='Month', font=('Small Fonts', 15))
-    month_label.grid(row=1, column=1)
+    month_label = create_label(month_frame, 'Month', 1, 1, font=('Small Fonts', 15))
 
     month_options = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August',
                      'September', 'October', 'November', 'December']
@@ -89,11 +109,9 @@ def main():
     month_drop.grid(row=2, column=1)
 
     # day frame
-    day_frame = ttk.Frame(root)
-    day_frame.grid(row=1, column=0)
+    day_frame = create_frame(root, 1, 0)
 
-    day_label = ttk.Label(day_frame, text='Day', font=('Small Fonts', 15))
-    day_label.grid(row=1, column=0)
+    day_label = create_label(day_frame, 'Day', 1, 0, font=('Small Fonts', 15))
 
     day_options = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10',
                    '11', '12', '13', '14', '15', '16', '17', '18', '19', '20',
@@ -104,11 +122,9 @@ def main():
     day_drop.grid(row=2, column=0)
 
     # hour frame
-    hour_frame = ttk.Frame(root)
-    hour_frame.grid(row=2, column=0)
+    hour_frame = create_frame(root, 2, 0)
 
-    hour_label = ttk.Label(hour_frame, text='Hour', font=('Small Fonts', 15))
-    hour_label.grid(row=1, column=0)
+    hour_label = create_label(hour_frame, 'Hour', 1, 0, font=('Small Fonts', 15))
 
     hour_option = ['00', '01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', '13',
                    '14', '15', '16', '17', '18', '19', '20', '21', '22', '23']
@@ -118,45 +134,37 @@ def main():
     hour_drop.grid(row=2, column=0)
 
     # minute frame
-    minute_frame = ttk.Frame(root)
-    minute_frame.grid(row=2, column=1)
+    minute_frame = create_frame(root, 2, 1)
 
-    minute_label = ttk.Label(minute_frame, text='Minute', font=('Small Fonts', 15))
-    minute_label.grid(row=1, column=1)
+    minute_label = create_label(minute_frame, 'Minute', 1, 1, font=('Small Fonts', 15))
 
     minute_text = tk.StringVar()
-    minute_textbox = ttk.Entry(minute_frame, textvariable=minute_text)
-    minute_textbox.grid(row=2, column=1)
+    minute_textbox = create_textbox(minute_frame, minute_text, 2, 1)
 
     # second frame
-    second_frame = ttk.Frame(root)
-    second_frame.grid(row=2, column=2)
+    second_frame = create_frame(root, 2, 2)
 
-    second_label = ttk.Label(second_frame, text="Seconds", font=('Small Fonts', 15))
-    second_label.grid(row=1, column=0)
+    second_label = create_label(second_frame, 'Second', 1, 0, font=('Small Fonts', 15))
 
     second_text = tk.StringVar()
-    second_textbox = ttk.Entry(second_frame, textvariable=second_text)
-    second_textbox.grid(row=2, column=0)
+    second_textbox = create_textbox(second_frame, second_text, 2, 0)
 
     # saved alarms
-    saved_alarms_frame = ttk.Frame(root)
-    saved_alarms_frame.grid(row=4, column=0, columnspan=3)
+    saved_alarms_frame = create_frame(root, 4, 0, columnspan=3)
 
-    saved_alarms_label = ttk.Label(saved_alarms_frame, text=" ", font=('Small Fonts', 15))
-    saved_alarms_label.grid(row=0, column=0)
+    saved_alarms_label = create_label(saved_alarms_frame, '', 0, 0, font=('Small Fonts', 15))
 
     # save button
-    save_btn = ttk.Button(root, text="SAVE",
-                          command=lambda: alarms == save_pressed(day_text.get(),
-                                                                 str(convert_month(month_text.get())), year_text.get(),
-                                                                 hour_text.get(), minute_text.get(), second_text.get(),
-                                                                 saved_alarms_label, alarms))
-    save_btn.grid(row=3, column=0)
+    save_btn = create_button(root, 'Save',
+                             lambda: alarms == save_pressed(day_text.get(), str(convert_month(month_text.get())),
+                                                            year_text.get(), hour_text.get(), minute_text.get(),
+                                                            second_text.get(), saved_alarms_label, alarms), 3, 0)
 
     # submit button
-    submit_btn = ttk.Button(root, text="SUBMIT", command=lambda: submit_pressed(alarms))
-    submit_btn.grid(row=3, column=1)
+    submit_btn = create_button(root, 'Submit', lambda: submit_pressed(alarms), 3, 1)
+
+    # exit button
+    exit_btn = create_button(root, 'Exit', lambda: exit_pressed(root), 3, 2)
 
     try:
         from ctypes import windll
