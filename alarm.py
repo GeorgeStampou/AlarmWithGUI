@@ -39,6 +39,9 @@ def check_time(time_obj, sound):
             if current_time == str(time_obj):  # elegxos an sympimptoyn oi wres kai meres alliws ksanatrexei
                 sound_playing(sound)
                 return True
+           
+            #else: time.sleep(1) 
+            
 
 
 # erwthsh an theloume na valoyme kai allo ksipnitiri
