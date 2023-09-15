@@ -20,7 +20,7 @@ The Alarm Application is a Python program that allows users to set alarms and ge
    git clone https://github.com/GeorgeStampou/AlarmWithGUI.git
 2. Change into the project directory.
    ``` shell
-   cd alarm-app
+   cd AlarmWithGUI-master
 3. Install the required dependencies.
    ``` shell
    pip install pygame
