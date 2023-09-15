@@ -32,7 +32,7 @@ The Alarm Application is a Python program that allows users to set alarms and ge
 3. To submit and set the alarms, click the "Submit" button.
 4. When the alarm time is reached, a sound will play to notify you.
 ## Screenshot
-
+![image](https://github.com/GeorgeStampou/AlarmWithGUI/assets/58564542/c0b2decd-af55-48af-b199-9b0e292067a3)
 
 
 
