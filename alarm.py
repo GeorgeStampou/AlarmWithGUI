@@ -5,15 +5,14 @@ import os
 
 mixer.init()
 
-
-# synarthsh poy paizei to tragoydi poy exoyme apothikeysi ston fakelo Data
+# funtion which plays the song from Data folder
 def sound_playing(a):
     mixer.Sound.play(a)
     duration = mixer.Sound.get_length(a)
     time.sleep(duration)
 
 
-# synarthsh poy elegxei thn hmeromhnia kai wra poy dinei o xrhsths
+#function to check date and time from user, all inputs must be filled
 def validate_time(t):
     time_obj = "WRONG TIME"
     correct = False
@@ -25,7 +24,7 @@ def validate_time(t):
     return [time_obj, correct]
 
 
-# synarthsh pou elegxei an ftasame sthn wra wste na xtyphsei to ksipnititri
+#function to check the time has come so the alarm has to ring
 def check_time(time_obj, sound):
 
     current_time = datetime.now().isoformat(' ', 'seconds')
@@ -42,21 +41,6 @@ def check_time(time_obj, sound):
            
             #else: time.sleep(1) 
             
-
-
-# erwthsh an theloume na valoyme kai allo ksipnitiri
-def play_again():
-    while True:
-        again_input = input("Do you want to add another alarm? ('Y', 'y' = yes, 'N', 'n' = no): ").lower()
-
-        if again_input == 'y':
-            return '0'
-        elif again_input == 'n':
-            print("exit")
-            return '1'
-        else:
-            print("You should give 'y' for yes and 'n' for no.")
-
 
 def func_alarm(alarms):
 

@@ -29,7 +29,7 @@ def convert_month(month):
     return datetime_obj.month
 
 
-def create_button(root, text, command, row, column, **kwargs):
+def create_button(root, text, command, row, column):
     button = ttk.Button(root, text=text, command=command)
     button.grid(row=row, column=column)
     return button
@@ -51,7 +51,7 @@ def create_label(root, text, row, column, **kwargs):
     return label
 
 
-def create_textbox(frame, text, row, column, **kwargs):
+def create_textbox(frame, text, row, column):
     textbox = ttk.Entry(frame, textvariable=text)
     textbox.grid(row=row, column=column)
     return textbox
@@ -82,7 +82,7 @@ def main():
     root.columnconfigure(0, weight=1)
     root.rowconfigure(3, weight=1)
 
-    label = create_label(root, 'ALARM', 0, 0, font=('Small Fonts', 25), columnspan=3, sticky='n')
+    create_label(root, 'ALARM', 0, 0, font=('Small Fonts', 25), columnspan=3, sticky='n')
 
     # root.attributes('-topmost', 1)  ensure that a window is always at the top of the stacking order
     root.iconbitmap(os.path.join("Data", "alarmicon.ico"))
@@ -90,15 +90,15 @@ def main():
     # year frame
     year_frame = create_frame(root, 1, 2)
 
-    year_label = create_label(year_frame, 'Year', 1, 2, font=('Small Fonts', 15))
+    create_label(year_frame, 'Year', 1, 2, font=('Small Fonts', 15))
 
     year_text = tk.StringVar()
-    year_textbox = create_textbox(year_frame, year_text, 2, 2)
+    create_textbox(year_frame, year_text, 2, 2)
 
     # month frame
     month_frame = create_frame(root, 1, 1)
 
-    month_label = create_label(month_frame, 'Month', 1, 1, font=('Small Fonts', 15))
+    create_label(month_frame, 'Month', 1, 1, font=('Small Fonts', 15))
 
     month_options = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August',
                      'September', 'October', 'November', 'December']
@@ -111,7 +111,7 @@ def main():
     # day frame
     day_frame = create_frame(root, 1, 0)
 
-    day_label = create_label(day_frame, 'Day', 1, 0, font=('Small Fonts', 15))
+    create_label(day_frame, 'Day', 1, 0, font=('Small Fonts', 15))
 
     day_options = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10',
                    '11', '12', '13', '14', '15', '16', '17', '18', '19', '20',
@@ -124,7 +124,7 @@ def main():
     # hour frame
     hour_frame = create_frame(root, 2, 0)
 
-    hour_label = create_label(hour_frame, 'Hour', 1, 0, font=('Small Fonts', 15))
+    create_label(hour_frame, 'Hour', 1, 0, font=('Small Fonts', 15))
 
     hour_option = ['00', '01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', '13',
                    '14', '15', '16', '17', '18', '19', '20', '21', '22', '23']
@@ -136,18 +136,18 @@ def main():
     # minute frame
     minute_frame = create_frame(root, 2, 1)
 
-    minute_label = create_label(minute_frame, 'Minute', 1, 1, font=('Small Fonts', 15))
+    create_label(minute_frame, 'Minute', 1, 1, font=('Small Fonts', 15))
 
     minute_text = tk.StringVar()
-    minute_textbox = create_textbox(minute_frame, minute_text, 2, 1)
+    create_textbox(minute_frame, minute_text, 2, 1)
 
     # second frame
     second_frame = create_frame(root, 2, 2)
 
-    second_label = create_label(second_frame, 'Second', 1, 0, font=('Small Fonts', 15))
+    create_label(second_frame, 'Second', 1, 0, font=('Small Fonts', 15))
 
     second_text = tk.StringVar()
-    second_textbox = create_textbox(second_frame, second_text, 2, 0)
+    create_textbox(second_frame, second_text, 2, 0)
 
     # saved alarms
     saved_alarms_frame = create_frame(root, 4, 0, columnspan=3)
@@ -155,16 +155,16 @@ def main():
     saved_alarms_label = create_label(saved_alarms_frame, '', 0, 0, font=('Small Fonts', 15))
 
     # save button
-    save_btn = create_button(root, 'Save',
+    create_button(root, 'Save',
                              lambda: alarms == save_pressed(day_text.get(), str(convert_month(month_text.get())),
                                                             year_text.get(), hour_text.get(), minute_text.get(),
                                                             second_text.get(), saved_alarms_label, alarms), 3, 0)
 
     # submit button
-    submit_btn = create_button(root, 'Submit', lambda: submit_pressed(alarms), 3, 1)
+    create_button(root, 'Submit', lambda: submit_pressed(alarms), 3, 1)
 
     # exit button
-    exit_btn = create_button(root, 'Exit', lambda: exit_pressed(root), 3, 2)
+    create_button(root, 'Exit', lambda: exit_pressed(root), 3, 2)
 
     try:
         from ctypes import windll
